@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: flink-sql-client
+spec:
+  containers:
+    - name: flink-sql-client
+      image: localhost:32000/pulsar-flink-connector-image:1.0.0
+      command: ["sql-client.sh", "embedded"]
+      args: ["-e", "remote.environment.parallelism.default=1"]  # Customize Flink configuration as needed
+      stdin: true
+      tty: true

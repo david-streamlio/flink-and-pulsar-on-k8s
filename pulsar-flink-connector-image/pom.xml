@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.streamnative.flink</groupId>
+        <artifactId>flink-and-pulsar-on-k8s</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>pulsar-flink-connector-image</artifactId>
+
+    <properties>
+        <maven.compiler.source>20</maven.compiler.source>
+        <maven.compiler.target>20</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.streamnative.connectors</groupId>
+            <artifactId>flink-sql-connector-pulsar</artifactId>
+            <version>1.15.1.1</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.43.0</version>
+                <configuration>
+                    <images>
+                        <image>
+                            <name>${docker.repo}/${project.artifactId}:${project.version}</name>
+                            <build>
+                                <from>flink:1.17</from>
+                                <assemblies>
+                                    <assembly>
+                                        <name>app-dependencies</name>
+                                        <targetDir>/opt/flink/lib</targetDir>
+                                        <user>flink:flink</user>
+                                        <descriptorRef>dependencies</descriptorRef>
+                                    </assembly>
+                                </assemblies>
+                                <tags>
+                                    <tag>latest</tag>
+                                </tags>
+                            </build>
+                        </image>
+                    </images>
+                    <registry>${docker.repo}</registry>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>docker:build</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build</goal>
+                            <goal>push</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

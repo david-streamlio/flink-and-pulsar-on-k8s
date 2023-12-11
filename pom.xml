@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>io.streamnative.flink</groupId>
+    <artifactId>flink-and-pulsar-on-k8s</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>pulsar-flink-connector-image</module>
+        <module>basic-example</module>
+        <module>flink-sql-client</module>
+        <module>flink-cluster</module>
+    </modules>
+
+    <properties>
+        <maven.compiler.source>20</maven.compiler.source>
+        <maven.compiler.target>20</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <docker.repo>localhost:32000</docker.repo>
+        <flink.version>1.17.0</flink.version>
+    </properties>
+
+</project>
